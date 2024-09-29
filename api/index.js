@@ -25,6 +25,6 @@ app.use((err, req, res, next) => {
 
 connectDB(() => {
   app.listen(PORT, () => {
-    console.log("Server is running on post ", PORT);
+    console.log("Server is running on port ", PORT);
   });
 });
