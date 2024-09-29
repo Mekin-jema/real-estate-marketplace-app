@@ -1,20 +1,16 @@
 import express from "express";
 import dotentv from "dotenv";
-import mongoose, { mongo } from "mongoose";
+import { connectDB } from "./database/connectDB.js";
+import userRouter from "./routes/user.route.js";
 dotentv.config();
 
 const PORT = process.env.PORT;
 const app = express();
 
-mongoose
-  .connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("DB connected");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+app.use(userRouter);
 
-app.listen(PORT, () => {
-  console.log("Server is running on post ", PORT);
+connectDB(() => {
+  app.listen(PORT, () => {
+    console.log("Server is running on post ", PORT);
+  });
 });
