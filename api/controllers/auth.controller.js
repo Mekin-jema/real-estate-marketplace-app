@@ -9,15 +9,16 @@ export const signup = async (req, res, next) => {
   if (userExist) {
     return res.status(400).json({
       error: "Email is already taken",
+      success: false,
     });
   }
-  const hashedPassword = bcryptjs.hashSync(password);
+  const hashedPassword = bcryptjs.hashSync(password, 10);
   const newUser = await new User({ username, email, password: hashedPassword });
   const { password: pass, ...rest } = newUser._doc;
 
   try {
     await newUser.save();
-    res.json({
+    res.status(200).json({
       message: "User Created Successfully",
       user: rest,
     });
@@ -26,7 +27,7 @@ export const signup = async (req, res, next) => {
   }
 };
 
-export const singin = async (req, res, next) => {
+export const signin = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     const validUser = await User.findOne({ email });
@@ -45,12 +46,11 @@ export const singin = async (req, res, next) => {
     res
       .cookie("access_token", token, {
         httpOnly: true,
-        sameSite: "none",
-        secure: true,
       })
       .status(200)
       .json({
         currentUser: rest,
+        success: true,
         message: "User Logged In Successfully",
       });
   } catch (error) {

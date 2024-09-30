@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signInSuccess, signInFail, signInStart } from "../Redux/userSlice";
 //change the signup to signin
 const SignIn = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const { error, loading } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -15,7 +19,8 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
+      // setLoading(true);
+      dispatch(signInStart());
       // we will not use this path always we can use proxy in vite.config.js
       const res = await fetch("/api/auth/signin", {
         //change the path to signin
@@ -26,17 +31,25 @@ const SignIn = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (data.succeess === false) {
-        setLoading(false);
-        setError(data.message);
-      }
-      setLoading(false);
-      setError(null);
-      navigate("/"); //change the path to home
       console.log(data);
+      if (data.success === false) {
+        dispatch(signInFail(data.message));
+        return;
+        // setLoading(false);
+        // setError(data.message);
+      }
+
+      // setLoading(false);
+      dispatch(signInSuccess(data));
+
+      // setError(null);
+      navigate("/"); //change the path to home
+
+      // console.log(data);
     } catch (error) {
-      setError(error.message);
-      setLoading(false);
+      dispatch(signInFail(error.message));
+      // setError(error.message);
+      // setLoading(false);
     }
   };
   return (
