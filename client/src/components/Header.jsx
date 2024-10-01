@@ -35,21 +35,19 @@ const Header = () => {
             </li>
           </Link>
 
-          {user ? (
-            <Link to="profile">
+          <Link to="/profile">
+            {user ? (
               <img
                 src={user.currentUser.photo}
                 alt="Profile"
                 className=" h-7 w-7 object-cover rounded-full  "
               />
-            </Link>
-          ) : (
-            <Link to="/sign-in">
+            ) : (
               <li className=" sm:inline text-slate-700 hover:underline">
                 Sign In
               </li>
-            </Link>
-          )}
+            )}
+          </Link>
         </ul>
       </div>
     </header>
