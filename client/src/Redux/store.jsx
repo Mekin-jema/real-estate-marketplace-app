@@ -16,12 +16,7 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
-  middleware: (
-    getDefaultMiddleware // eslint-disable-line no-unused-vars
-  ) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
+  middleware: (middleware) => middleware({ serializableCheck: false }),
 });
 
 export default store;
