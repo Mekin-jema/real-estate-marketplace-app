@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import { getDownloadURL } from "firebase/storage";
 // import storage from "firebase/storage";
 // import uploadBytestResumable from "firebase";
@@ -207,7 +208,11 @@ const Profile = () => {
         <button className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:95 disable:opacity-95">
           update Profile
         </button>
+        <Link className="bg-green-700 text-white p-3 rounded uppercase text-center hover:opacity-95">
+          Create Listing
+        </Link>
       </form>
+
       <div className="text-red-700 cursor-pointer flex  justify-between py-5 ">
         <span
           onClick={() => {
