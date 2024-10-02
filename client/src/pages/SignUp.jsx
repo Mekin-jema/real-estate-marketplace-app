@@ -27,9 +27,11 @@ const SignUp = () => {
       });
       const data = await res.json();
       console.log(data);
-      if (data.succeess === false) {
+      if (data.success === false) {
         setLoading(false);
-        setError(data.message);
+        setError(data.error);
+        // setFormData({});
+        // console.log(error);
         return;
       }
       setLoading(false);
@@ -44,7 +46,7 @@ const SignUp = () => {
   return (
     <div className="p-3 max-w-lg mx-auto ">
       <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
-      {error && <p className="text-red-500 text-center">Invalid credetial</p>}
+      {error && <p className="text-red-500 text-center">User Already Exist</p>}
       <form
         onSubmit={handleSubmit}
         className="flex flex-col gap-4 max-lg mx-auto"

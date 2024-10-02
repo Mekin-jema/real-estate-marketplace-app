@@ -26,5 +26,6 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = new mongoose.model("User", userSchema);
+// console.log(User.findOne({ email: "user@gmail.com" }));
 
 export default User;
