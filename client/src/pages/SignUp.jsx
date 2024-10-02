@@ -17,6 +17,7 @@ const SignUp = () => {
     e.preventDefault();
     try {
       setLoading(true);
+
       // we will not use this path always we can use proxy in vite.config.js
       const res = await fetch("/api/auth/signup", {
         method: "POST",

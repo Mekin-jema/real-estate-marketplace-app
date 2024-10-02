@@ -10,6 +10,7 @@ const SignIn = () => {
   // const [error, setError] = useState(null);
   // const [loading, setLoading] = useState(false);
   const { error, loading } = useSelector((state) => state.user);
+  console.log(loading);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -84,11 +85,11 @@ const SignIn = () => {
           onChange={handleChange}
         />
         <button
-          disabled={loading}
+          // disabled={false}
           // type="button"
           className="bg-slate-700 p-3 text-center uppercase text-white rounded-lg hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Loading..." : "Sign In"}
+          {false ? "Loading..." : "Sign In"}
         </button>
         <OAuth />
       </form>

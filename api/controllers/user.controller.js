@@ -29,20 +29,16 @@ export const updateUser = async (req, res, next) => {
       { new: true }
     );
 
-    // if (!updatedUser) {
-    //   return next(errorHandler(404, "User not found"));
-    // }
+    if (!updatedUser) {
+      return next(errorHandler(404, "User not found"));
+    }
 
-    // console.log(updatedUser);
+    console.log(updatedUser);
 
     const { password, ...rest } = updatedUser._doc;
-    res.status(200).json({
-      success: true,
-      message: "User updated successfully",
-      user: rest,
-    });
+    res.status(200).json(rest);
   } catch (error) {
-    // next(errorHandler(500, "Server error", error));
+    next(errorHandler(500, "Server error", error));
     console.log(error);
   }
 };

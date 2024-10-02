@@ -2,6 +2,7 @@ import User from "../model/user.model.js";
 import bcryptjs from "bcryptjs";
 import { errorHandler } from "../utils/error.js";
 import jwt from "jsonwebtoken";
+import { request } from "express";
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -57,11 +58,7 @@ export const signin = async (req, res, next) => {
         httpOnly: true,
       })
       .status(200)
-      .json({
-        currentUser: rest,
-        success: true,
-        message: "User Logged In Successfully",
-      });
+      .json(rest);
   } catch (error) {
     next(error);
   }
@@ -78,9 +75,7 @@ export const google = async (req, res, next) => {
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
         .json({
-          currentUser: rest,
-          success: true,
-          message: "User Logged In Successfully",
+          rest,
         });
     } else {
       const generatePassword =
@@ -99,11 +94,10 @@ export const google = async (req, res, next) => {
       const savedUser = await newUser.save();
       const token = jwt.sign({ id: savedUser._id }, process.env.SECRET_KEY);
       const { password: pass, ...rest } = savedUser._doc;
-      res.cookie("access_token", token, { httpOnly: true }).status(200).json({
-        currentUser: rest,
-        success: true,
-        message: "User Logged In Successfully",
-      });
+      res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json(rest);
     }
   } catch (error) {
     next(error);
