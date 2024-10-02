@@ -25,6 +25,7 @@ const Profile = () => {
   const [filePercentage, setfilePercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData] = useState({});
+  const [updated, setUpdated] = useState(false);
   // console.log(filePercentage);
   // console.log(fileUploadError);
   // console.log(formData);
@@ -85,6 +86,7 @@ const Profile = () => {
         return;
       }
       dispatch(updateUserSuccess(data));
+      setUpdated(true);
     } catch (error) {
       dispatch(updateUserFail(error.message));
     }
@@ -164,6 +166,9 @@ const Profile = () => {
       <div className="text-red-700 cursor-pointer flex  justify-between py-5 ">
         <span>Delete account</span>
         <span>Sign out</span>
+      </div>
+      <div className="text-green-700 text-center">
+        {updated ? <p>User Profile is Successfully updated</p> : ""}
       </div>
     </div>
   );
