@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 // import { getDownloadURL } from "firebase/storage";
 // import storage from "firebase/storage";
 // import uploadBytestResumable from "firebase";
@@ -14,10 +15,17 @@ import {
   updateUserFail,
   updateUserStart,
   updateUserSuccess,
+  deleteUserFail,
+  deleteUserStart,
+  deleteUserSuccess,
+  logoutUserFail,
+  logoutUserStart,
+  logoutUserSuccess,
 } from "../Redux/userSlice";
 import { useDispatch } from "react-redux";
 import { app } from "../Firebase";
 const Profile = () => {
+  const navigate = useNavigate();
   const fileRef = useRef(null);
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.user.currentUser);
@@ -92,6 +100,43 @@ const Profile = () => {
     }
   };
 
+  const deleteAccount = async () => {
+    try {
+      dispatch(deleteUserStart());
+
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+      console.log(data);
+
+      if (data.success === false) {
+        dispatch(deleteUserFail(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess());
+      navigate("/");
+    } catch (error) {
+      dispatch(deleteUserFail(error.message));
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(logoutUserStart());
+      const res = await fetch("/api/auth/signout");
+      const data = await res.json();
+      console.log(data);
+
+      if (data.success === false) {
+        dispatch(logoutUserFail(data.message));
+        return;
+      }
+      dispatch(logoutUserSuccess());
+    } catch (error) {}
+  };
+
   //   firebae storage
   //   service firebase.storage {
   //   match /b/{bucket}/o {
@@ -164,8 +209,14 @@ const Profile = () => {
         </button>
       </form>
       <div className="text-red-700 cursor-pointer flex  justify-between py-5 ">
-        <span>Delete account</span>
-        <span>Sign out</span>
+        <span
+          onClick={() => {
+            deleteAccount();
+          }}
+        >
+          Delete account
+        </span>
+        <span onClick={handleSignOut}>Sign out</span>
       </div>
       <div className="text-green-700 text-center">
         {updated ? <p>User Profile is Successfully updated</p> : ""}
