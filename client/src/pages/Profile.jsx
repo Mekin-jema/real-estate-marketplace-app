@@ -122,7 +122,6 @@ const Profile = () => {
       dispatch(deleteUserFail(error.message));
     }
   };
-
   const handleSignOut = async () => {
     try {
       dispatch(logoutUserStart());
