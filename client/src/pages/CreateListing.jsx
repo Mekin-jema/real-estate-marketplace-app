@@ -11,7 +11,7 @@ import {
 import { useSelector } from "react-redux";
 
 const CreateListing = () => {
-  const user = useSelector((state) => state.currentUser);
+  const user = useSelector((state) => state.user.currentUser);
   const [files, setFiles] = useState([]);
   const [filePercentage, setfilePercentage] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
@@ -28,13 +28,13 @@ const CreateListing = () => {
     offer: false,
     parking: false,
     furnished: false,
-    images: [],
+    image: [],
   });
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  console.log(formData);
+  // console.log(formData);
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formData.images.length < 7) {
+    if (files.length > 0 && files.length + formData.image.length < 7) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
@@ -45,7 +45,7 @@ const CreateListing = () => {
         .then((downloadURLs) => {
           setFormData({
             ...formData,
-            images: formData.images.concat(downloadURLs),
+            image: formData.image.concat(downloadURLs),
           });
           setImageUploadError(false);
           setUploading(false);
@@ -92,7 +92,7 @@ const CreateListing = () => {
   const handleRemoveImage = (index) => {
     setFormData({
       ...formData,
-      images: formData.images.filter((url, i) => i !== index),
+      image: formData.image.filter((url, i) => i !== index),
     });
   };
 
@@ -107,7 +107,7 @@ const CreateListing = () => {
     ) {
       setFormData({ ...formData, [e.target.id]: e.target.checked });
     }
-
+    console.log(formData.furnished);
     if (
       e.target.type === "number" ||
       e.target.type === "text" ||
@@ -118,11 +118,12 @@ const CreateListing = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log("handle submit");
     e.preventDefault();
     try {
       setLoading(true);
       setError(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch("/api/listings/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,11 +131,26 @@ const CreateListing = () => {
         body: JSON.stringify({ ...formData, userRef: user._id }),
       });
       const data = await res.json();
+      console.log(data);
       setLoading(false);
       if (data.success === false) {
         setError(true);
       }
-      setLoading();
+      // setLoading();
+      setFormData({
+        name: "",
+        description: "",
+        address: "",
+        type: "",
+        bedrooms: 1,
+        bathrooms: 1,
+        regularPrice: 50,
+        discountPrice: 0,
+        offer: false,
+        parking: false,
+        furnished: false,
+        image: [],
+      });
     } catch (error) {
       setError(true);
       setLoading(false);
@@ -265,7 +281,7 @@ const CreateListing = () => {
                 type="number"
                 id="regularPrice"
                 min="50"
-                max="1000000"
+                max="10000000"
                 required
                 className="p-3 border border-gray-300 rounded-lg "
                 onChange={handleChange}
@@ -279,15 +295,15 @@ const CreateListing = () => {
             <div className=" flex items-center gap-2">
               <input
                 type="number"
-                id="number"
+                id="discountPrice"
                 min="1"
                 max="10"
                 required
                 className="p-3 border border-gray-300 rounded-lg "
                 onChange={handleChange}
-                value={formData.discountedPrice}
+                value={formData.discountPrice}
               />
-              <div className=" flex-col items-center ">
+              <div className="  ">
                 <p>Discounted Price</p>
                 <span>($ / month)</span>
               </div>
@@ -324,8 +340,8 @@ const CreateListing = () => {
             <p className="text-red-700 text-sm">
               {imageUploadError && imageUploadError}
             </p>
-            {formData.images.length > 0 &&
-              formData.images.map((url, index) => (
+            {formData.image.length > 0 &&
+              formData.image.map((url, index) => (
                 <div
                   className="flex justify-between p-3 border items-center "
                   key={url}
@@ -347,7 +363,10 @@ const CreateListing = () => {
                 </div>
               ))}
           </div>
-          <button className="p-3 text-white bg-slate-700 rounded-lg uppercase hover:opacity-95 disabled:opacity-95">
+          <button
+            type="submit"
+            className="p-3 text-white bg-slate-700 rounded-lg uppercase hover:opacity-95 disabled:opacity-95"
+          >
             {loading ? "Creating..." : "Create Listing"}
           </button>
           {error && <p className=" text-red-700 text-sm "> {error}</p>}
