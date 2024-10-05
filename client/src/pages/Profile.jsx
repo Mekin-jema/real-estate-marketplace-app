@@ -184,6 +184,18 @@ const Profile = () => {
       console.log(error);
     }
   };
+
+  const handleUpdate = async (id) => {
+    const res = await fetch(`/api/listings/update/${id}`, {
+      method: "POST",
+    });
+    const data = await res.json();
+
+    if (data.success === false) {
+      return;
+    }
+    navigate(`/listings/${id}`);
+  };
   return (
     <div className=" p-3 mx-auto  max-w-lg">
       <h1 className="text-3xl font-semibold text-center">Profile</h1>
@@ -300,7 +312,10 @@ const Profile = () => {
               >
                 Delete
               </button>
-              <button className=" text-green-700 border border-green-700 p-3 px-5 ">
+              <button
+                className=" text-green-700 border border-green-700 p-3 px-5 "
+                onClick={() => handleUpdate(listing._id)}
+              >
                 Edit
               </button>
             </div>

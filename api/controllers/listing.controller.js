@@ -40,3 +40,30 @@ export const deleteListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateListing = async (req, res, next) => {
+  try {
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      return next(
+        errorHandler({ statusCode: 404, message: "Listing not found" })
+      );
+    }
+    if (req.user.id !== listing.userRef) {
+      return next(
+        errorHandler({
+          statusCode: 401,
+          message: "You are not authorized to update this listing",
+        })
+      );
+    }
+    const updatedListing = await Listing.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        new: true, // return the new listing
+      }
+    );
+    res.status(200).json(updatedListing);
+  } catch (error) {}
+};
