@@ -256,7 +256,10 @@ const Profile = () => {
         <button className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:95 disable:opacity-95">
           update Profile
         </button>
-        <Link className="bg-green-700 text-white p-3 rounded uppercase text-center hover:opacity-95">
+        <Link
+          to={"/create-listing"}
+          className="bg-green-700 text-white p-3 rounded uppercase text-center hover:opacity-95"
+        >
           Create Listing
         </Link>
       </form>
@@ -312,12 +315,11 @@ const Profile = () => {
               >
                 Delete
               </button>
-              <button
-                className=" text-green-700 border border-green-700 p-3 px-5 "
-                onClick={() => handleUpdate(listing._id)}
-              >
-                Edit
-              </button>
+              <Link to={`/update-listing/${listing._id}`}>
+                <button className=" text-green-700 border border-green-700 p-3 px-5 ">
+                  Edit
+                </button>
+              </Link>
             </div>
           </div>
         ))}
