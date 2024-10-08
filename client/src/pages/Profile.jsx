@@ -296,14 +296,14 @@ const Profile = () => {
             className=" flex  gap-4  justify-between items-center"
             key={index}
           >
-            <Link to={`/listings/${listing._id}`}>
+            <Link to={`/listing/${listing._id}`}>
               <img
                 src={listing.image[0]}
                 alt="image"
                 className=" h-16 w-16  object-contain"
               />
             </Link>
-            <Link to={`/listings/${listing._id}`}>
+            <Link to={`/listing/${listing._id}`}>
               <p className=" text-slate-700 font-semibold  hover:underline truncate flex flex-wrap ">
                 {listing.description}
               </p>
