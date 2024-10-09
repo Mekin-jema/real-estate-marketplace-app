@@ -160,7 +160,7 @@ const Listing = () => {
               </li>
             </ul>
             {currentUser &&
-              listing.userRef !== currentUser._id &&
+              listing.userRef === currentUser._id &&
               !contact(
                 <button
                   onClick={() => setContact(true)}
