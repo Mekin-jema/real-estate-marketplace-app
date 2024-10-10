@@ -4,7 +4,7 @@ import { MdLocationOn } from "react-icons/md";
 const ListingItem = ({ listing }) => {
   console.log(listing);
   return (
-    <div className=" bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-[330px] ">
+    <div className=" bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-[300px] ">
       <Link to={`/listing/${listing._id}`}>
         <img
           src={listing.image[0]}
@@ -30,11 +30,11 @@ const ListingItem = ({ listing }) => {
             {listing.type === "rent" && "/month"}
           </p>
         </div>
-        <div className="flex  text-slate-700">
-          <div className=" font-bold text-xs ">
+        <div className="flex  gap-2 text-slate-700">
+          <div className=" font-bold text-xs  ">
             {listing.bedrooms > 1
-              ? `${listing.bedrooms}Bedrooms`
-              : `${listing.bedrooms}Bedroom`}
+              ? `${listing.bedrooms}Bedrooms `
+              : `${listing.bedrooms}Bedroom  `}
           </div>
           <div className=" font-bold text-xs ">
             {listing.bathrooms > 1

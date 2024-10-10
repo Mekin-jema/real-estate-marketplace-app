@@ -9,6 +9,7 @@ const Search = () => {
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showMore, setShowMore] = useState(false);
   const [sidebardata, setSidebardata] = useState({
     searchTerm: "",
     type: "all",
@@ -42,10 +43,16 @@ const Search = () => {
     }
     const fetchListings = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
-      console.log(searchQuery);
+      // console.log(searchQuery);
       const res = await fetch(`/api/listings/get?${searchQuery}`);
       const data = await res.json();
+      if (data.length > 8) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
       if (data.success === false) {
         return;
       }
@@ -102,9 +109,23 @@ const Search = () => {
     const searchQuery = urlPrarams.toString();
     navigate(`/search?${searchQuery}`);
   };
+
+  const onShowMoreClick = async () => {
+    const numberOfListings = data.length;
+    const startIndex = numberOfListings;
+    const urlPrarams = new URLSearchParams(location.search);
+    urlPrarams.set("startIndex", startIndex);
+    const searchQuery = urlPrarams.toString();
+    const res = await fetch(`/api/listings/get?${searchQuery}`);
+    const response = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setData([...data, ...response]);
+  };
   return (
-    <div className=" flex flex-col md:flex-row">
-      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen">
+    <div className=" flex flex-col md:flex-row ">
+      <div className="p-7 border-b-2 md:border-r-2 md:min-h-screen ">
         <form className=" flex flex-col gap-8 " onSubmit={handleSubmit}>
           <div className=" flex items-center g-4 p-">
             <label className=" whitespace-nowrap font-semibold">
@@ -206,18 +227,16 @@ const Search = () => {
           </button>
         </form>
       </div>
-      <div>
+      <div className=" flex  flex-col flex-1">
         <h1 className=" text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
           Listing Result:
         </h1>
-        <div className="p-7 flex flex-wrap  gap-4 flex-1  ">
+        <div className="p-7 flex flex-wrap  gap-4   ">
           {!loading && data.length === 0 && (
             <p className=" text-xl text-slate-700 ">No listing found!</p>
           )}
           {loading && (
-            <p className=" text-xl text-slate-700 text-center w-full ">
-              Loading....
-            </p>
+            <p className=" text-xl text-slate-700 text-center  ">Loading....</p>
           )}
           {!loading &&
             data &&
@@ -226,6 +245,15 @@ const Search = () => {
                 <ListingItem listing={listing} />
               </div>
             ))}
+          {/* {console.log(showMore)} */}
+          {showMore && (
+            <button
+              onClick={onShowMoreClick}
+              className=" text-green-700 hover:underline text-center w-full"
+            >
+              ShowMore
+            </button>
+          )}
         </div>
       </div>
     </div>

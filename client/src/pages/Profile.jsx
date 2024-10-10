@@ -298,14 +298,14 @@ const Profile = () => {
           >
             <Link to={`/listing/${listing._id}`}>
               <img
-                src={listing.image[0]}
+                src={listing.image}
                 alt="image"
                 className=" h-16 w-16  object-contain"
               />
             </Link>
             <Link to={`/listing/${listing._id}`}>
-              <p className=" text-slate-700 font-semibold  hover:underline truncate flex flex-wrap ">
-                {listing.description}
+              <p className=" text-slate-700 font-semibold  hover:underline truncated flex flex-wrap ">
+                {listing.name}
               </p>
             </Link>
             <div className=" flex gap-2 ">
