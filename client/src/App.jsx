@@ -22,9 +22,9 @@ const App = () => {
         <Route path="/listing/:id" element={<Listing />} />
         <Route path="/search" element={<Search />} />
         <Route element={<PrivateRoute />}>
+          <Route path="/update-listing/:id" element={<UpdateListing />} />
           <Route path="/create-listing" element={<CreateListing />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/update-listing/:id" element={<UpdateListing />} />
         </Route>
       </Routes>
     </BrowserRouter>
