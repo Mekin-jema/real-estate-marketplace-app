@@ -9,8 +9,7 @@ import {
   ref,
 } from "firebase/storage";
 import { useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { FaLeaf } from "react-icons/fa";
+import { useParams } from "react-router-dom";
 
 const UpdateListing = () => {
   const user = useSelector((state) => state.user.currentUser);
