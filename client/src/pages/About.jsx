@@ -8,10 +8,10 @@ const About = () => {
       </h1>
 
       <p className="text-lg text-gray-600 mb-4">
-        Welcome to <strong>[Your Real Estate Company Name]</strong>, your
-        trusted partner in finding the perfect home or commercial space. Whether
-        you're looking to buy, sell, or rent, we are dedicated to helping you
-        navigate the complex world of real estate with ease and confidence.
+        Welcome to <strong>Mekin Real-estate</strong>, your trusted partner in
+        finding the perfect home or commercial space. Whether you're looking to
+        buy, sell, or rent, we are dedicated to helping you navigate the complex
+        world of real estate with ease and confidence.
       </p>
 
       <p className="text-lg text-gray-600 mb-4">
