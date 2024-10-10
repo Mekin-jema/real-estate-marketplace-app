@@ -1,6 +1,7 @@
 import { set } from "mongoose";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import ListingItem from "../components/ListingItem";
 
 const Search = () => {
   const params = useParams();
@@ -209,16 +210,23 @@ const Search = () => {
         <h1 className=" text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
           Listing Result:
         </h1>
-        {data &&
-          data.map((d) => (
-            <div
-              className=" flex flex-col w-56 h-100 items-center flex-1 px-5"
-              key={d._id}
-            >
-              <img src={d.image} alt="img" />
-              <p>{}</p>
-            </div>
-          ))}
+        <div className="p-7 flex flex-wrap  gap-4 flex-1  ">
+          {!loading && data.length === 0 && (
+            <p className=" text-xl text-slate-700 ">No listing found!</p>
+          )}
+          {loading && (
+            <p className=" text-xl text-slate-700 text-center w-full ">
+              Loading....
+            </p>
+          )}
+          {!loading &&
+            data &&
+            data.map((listing) => (
+              <div className=" " key={listing._id}>
+                <ListingItem listing={listing} />
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );
