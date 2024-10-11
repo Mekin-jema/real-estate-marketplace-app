@@ -72,15 +72,10 @@ const Listing = () => {
             {listing.title}
           </h1>
           <Swiper
-            // install Swiper modules
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={50}
             slidesPerView={1}
             navigation
-            // pagination={{ clickable: true }}
-            // scrollbar={{ draggable: true }}
-            // onSwiper={(swiper) => console.log(swiper)}
-            // onSlideChange={() => console.log("slide change")}
           >
             {listing.image.map((image, index) => (
               <SwiperSlide key={index}>
