@@ -79,7 +79,7 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData);
+
     try {
       dispatch(updateUserStart());
 
@@ -138,17 +138,6 @@ const Profile = () => {
       dispatch(logoutUserSuccess());
     } catch (error) {}
   };
-
-  //   firebae storage
-  //   service firebase.storage {
-  //   match /b/{bucket}/o {
-  //     match /{allPaths=**} {
-  //       allow read,
-  //       write: if request.resource.size<2*1024*1024 &&
-  //       request.resource.contentType.matches('image/.*')
-  //     }
-  //   }
-  // }
 
   const handleShowListings = async () => {
     console.log("handleshowlistings");
