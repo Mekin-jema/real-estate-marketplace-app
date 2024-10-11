@@ -10,6 +10,8 @@ import CreateListing from "./pages/CreateListing";
 import Listing from "./pages/Listing";
 import Search from "./pages/Search";
 import UpdateListings from "./pages/UpdateListings";
+
+// fix the ip address problem
 const App = () => {
   return (
     <BrowserRouter>
