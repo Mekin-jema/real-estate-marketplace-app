@@ -11,7 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-const UpdateListing = () => {
+const UpdateListings = () => {
   const user = useSelector((state) => state.user.currentUser);
   const [files, setFiles] = useState([]);
   const [filePercentage, setfilePercentage] = useState(0);
@@ -395,4 +395,4 @@ const UpdateListing = () => {
   );
 };
 
-export default UpdateListing;
+export default UpdateListings;
