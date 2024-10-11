@@ -10,7 +10,7 @@ dotentv.config();
 
 const PORT = process.env.PORT;
 
-const __driname = path.resolve();
+const __dirname = path.resolve();
 const app = express();
 
 app.use(express.json());
@@ -21,10 +21,10 @@ app.use("/api/auth", authRouter);
 app.use("/api/listings", listingRouter);
 //middleware for error handling
 
-app.use(express.static(path.join(__driname, "/client/dist")));
+app.use(express.static(path.join(__dirname, "/client/dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__driname, "/client/dist/index.html"));
+  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
 app.use((err, req, res, next) => {
